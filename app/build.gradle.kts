@@ -38,12 +38,17 @@ android {
         jvmTarget = "1.8"
     }
     buildToolsVersion = "30.0.2"
-    buildFeatures {
-        dataBinding = true
+    dataBinding {
+        enable = true
     }
 }
 
 dependencies {
+    //room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
     //lifecycle
     implementation( libs.androidx.lifecycle.runtime.ktx)
     //glide
