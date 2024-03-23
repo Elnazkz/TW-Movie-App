@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ShapeAppearanceOverlay.App.Card.Media" parent="">
+        <item name="cornerSizeBottomLeft">@dimen/dimen_14</item>
+        <item name="cornerSizeBottomRight">@dimen/dimen_14</item>
+        <item name="cornerSizeTopLeft">@dimen/dimen_14</item>
+        <item name="cornerSizeTopRight">@dimen/dimen_14</item>
+    </style>
+
+    <style name="Heading2_TextStyle" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/inter_bold</item>
+        <item name="android:textSize">@dimen/text_16</item>
+    </style>
+</resources>

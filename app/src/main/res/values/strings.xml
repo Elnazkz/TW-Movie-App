@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TW-Movie-App</string>
+    <string name="no_movies_fount">No Movies Found</string>
+    <string name="user_score">user score</string>
 </resources>
