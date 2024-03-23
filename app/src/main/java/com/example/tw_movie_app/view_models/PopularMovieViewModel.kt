@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.tw_movie_app.data.models.Genre
 import com.example.tw_movie_app.data.models.Movie
 import com.example.tw_movie_app.data.responses.GenresResponse
+import com.example.tw_movie_app.data.responses.MovieResponse
 import com.example.tw_movie_app.data.responses.MoviesResponse
+import com.example.tw_movie_app.data.responses.SearchResponse
 import com.example.tw_movie_app.services.network.MainRepository
 import com.example.tw_movie_app.services.network.Resource
 import com.example.tw_movie_app.services.network.ServiceType
@@ -28,6 +30,7 @@ class PopularMovieViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var genres = listOf<Genre>()
+    private var originalMovies = listOf<Movie>()
 
     private val _getMovies = MutableStateFlow<Resource<List<Movie>>>(Resource.initialize())
     val getMovies: StateFlow<Resource<List<Movie>>> = _getMovies
@@ -51,7 +54,6 @@ class PopularMovieViewModel @Inject constructor(
             getDataFlow(
                 service = ServiceType.GET_GENRES,
                 mainRepository = mainRepository,
-                pathInput = null,
                 input = null,
                 flowData = _getGenres
             )
@@ -69,35 +71,62 @@ class PopularMovieViewModel @Inject constructor(
 //               flowData = _getMovies
 //           )
 
-            val movieList: List<Movie>
 
-            val response = getData<MoviesResponse>(
+            val response = getData<Any?, MoviesResponse>(
                 serviceType = ServiceType.GET_POPULAR_MOVIES,
-                mainRepository = mainRepository
+                mainRepository = mainRepository,
+                input = null
             )
 
             if (response.status == Status.SUCCESS && response.data != null) {
-                movieList = response.data.results.map { movie ->
-                    Movie(
-                        id = movie.id,
-                        genres = movie.genreIds.map { id ->
-                            genres.find { id == it.id }?.name ?: "Genre"
-                        },
-                        backdropPath = movie.backdropPath,
-                        posterPath = movie.posterPath,
-                        originalTitle = movie.originalTitle,
-                        overview = movie.overview,
-                        releaseDate = movie.releaseDate.substring(0, 4),
-                        votePercentage = ceil( (movie.voteAverage / 10) * 100).toInt()
-                    )
+                originalMovies = setMovieList(response.data.results)
+                _getMovies.value = Resource(status = Status.SUCCESS, data = originalMovies)
 
-                }
-
-                _getMovies.value = Resource(status = Status.SUCCESS, data = movieList)
-
+            } else {
+                _getMovies.value = Resource(status = Status.ERROR , message = "Error")
             }
         }
     }
 
+    fun doSearch(input: String) {
+        viewModelScope.launch {
+            val response = getData<String, SearchResponse>(
+                serviceType = ServiceType.SEARCH_MOVIE,
+                mainRepository = mainRepository,
+                input = input
+            )
+
+            if (response.status == Status.SUCCESS && response.data != null) {
+                _getMovies.value = Resource(status = Status.SUCCESS, data = setMovieList(response.data.results))
+
+            }else {
+                _getMovies.value = Resource(status = Status.ERROR , message = "Error")
+            }
+        }
+    }
+
+    private fun setMovieList(list: List<MovieResponse>): List<Movie> {
+
+        return list.map { movie ->
+            Movie(
+                id = movie.id,
+                genres = (movie.genreIds ?: listOf()).map { id ->
+                    genres.find { id == it.id }?.name ?: "Genre"
+                },
+                backdropPath = movie.backdropPath ?: "",
+                posterPath = movie.posterPath ?: "",
+                originalTitle = movie.originalTitle ?: "Title",
+                overview = movie.overview ?: "",
+                releaseDate = if (movie.releaseDate == null || movie.releaseDate == "") "1900" else movie.releaseDate.substring(0, 4),
+                votePercentage = ceil((movie.voteAverage?.div(10))?.times(100) ?: 0.0).toInt()
+            )
+
+        }
+
+    }
+
+    fun resetToOriginalList() {
+        _getMovies.value = Resource(status = Status.SUCCESS, data = originalMovies)
+    }
 
 }

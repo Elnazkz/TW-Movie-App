@@ -23,7 +23,6 @@ data class Resource<out T>(val status: Status, val data: T? = null, val message:
 suspend fun <T, G> getDataFlow(
     service: ServiceType,
     mainRepository: MainRepository,
-    pathInput: T,
     input: T,
     flowData: MutableStateFlow<Resource<G>>
 )  {
@@ -33,6 +32,7 @@ suspend fun <T, G> getDataFlow(
             response = when(service) {
                 ServiceType.GET_POPULAR_MOVIES -> mainRepository.getPopularMovies()
                 ServiceType.GET_GENRES -> mainRepository.getGenres()
+                ServiceType.SEARCH_MOVIE -> TODO()
             }
 
             flowData.value = Resource.success( data = response as G)
@@ -43,9 +43,10 @@ suspend fun <T, G> getDataFlow(
     }
 }
 
-suspend fun <G> getData(
+suspend fun <T,G> getData(
     serviceType: ServiceType,
-    mainRepository: MainRepository
+    mainRepository: MainRepository,
+    input: T,
 ): Resource<G> {
 
     try {
@@ -54,6 +55,7 @@ suspend fun <G> getData(
                 ServiceType.GET_POPULAR_MOVIES -> mainRepository.getPopularMovies()
                 //other services will be added below
                 ServiceType.GET_GENRES -> mainRepository.getGenres()
+                ServiceType.SEARCH_MOVIE -> mainRepository.doSearch(input as String)
             }
 
             Resource.success( data = response as G)
