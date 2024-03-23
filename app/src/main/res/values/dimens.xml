@@ -68,6 +68,10 @@
     <dimen name="text_16">16sp</dimen>
     <dimen name="text_18">18sp</dimen>
     <dimen name="text_20">20sp</dimen>
+    <dimen name="text_22">22sp</dimen>
+    <dimen name="text_24">24sp</dimen>
+    <dimen name="text_26">26sp</dimen>
+    <dimen name="text_60">60sp</dimen>
 
     <dimen name="text_small">12sp</dimen>
     <dimen name="text_medium">14sp</dimen>

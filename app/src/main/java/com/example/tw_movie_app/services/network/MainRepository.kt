@@ -16,4 +16,7 @@ class MainRepository @Inject constructor(
 //            baseAuth = BASIC_AUTH
         )
 
+    suspend fun getGenres() =
+        apiService.getGenres()
+
 }

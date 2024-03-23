@@ -6,6 +6,34 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:background="@color/light_green"
+            android:layout_height="@dimen/dimen_200"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/searchView"
+            android:background="@drawable/bg_round_white"
+            android:layout_marginTop="@dimen/dimen_40"
+            android:layout_marginHorizontal="@dimen/dimen_30"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_49"
+            android:paddingHorizontal="@dimen/dimen_20"
+            android:hint="@string/search"
+            android:fontFamily="@font/inter_bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/popular_right_now"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="@dimen/dimen_30"
+            app:layout_constraintTop_toBottomOf="@id/searchView"
+            style="@style/Heading1_TextStyle"/>
+
 
 
         <TextView
@@ -27,7 +55,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             tools:listitem="@layout/item_movie"
             android:layout_marginHorizontal="@dimen/dimen_15"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
         <ProgressBar
             android:id="@+id/loading_view"

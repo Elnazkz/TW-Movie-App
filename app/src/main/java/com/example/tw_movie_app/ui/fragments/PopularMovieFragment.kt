@@ -1,19 +1,18 @@
 package com.example.tw_movie_app.ui.fragments
 
 import android.view.View
-import android.widget.TextView
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.tw_movie_app.R
 import com.example.tw_movie_app.adapters.MovieAdapter
 import com.example.tw_movie_app.appbase.BaseFragment
 import com.example.tw_movie_app.data.models.Movie
-import com.example.tw_movie_app.data.responses.MoviesResponse
+import com.example.tw_movie_app.data.responses.MovieResponse
 import com.example.tw_movie_app.databinding.FragmentMoviesListBinding
 import com.example.tw_movie_app.services.network.Status
 import com.example.tw_movie_app.view_models.PopularMovieViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -37,16 +36,17 @@ class PopularMovieFragment : BaseFragment<FragmentMoviesListBinding>(R.layout.fr
                     Status.SUCCESS -> {
                         binding.loadingView.visibility = View.GONE
 
-                        if (it.data?.results?.isEmpty() == true) {
+                        if (it.data?.isEmpty() == true) {
                             binding.noDataFound.visibility = View.VISIBLE
                         } else {
                             binding.noDataFound.visibility = View.GONE
-                            it.data?.results?.let { it1 -> setMovieAdapter(it1) }
+                            it.data?.let { it1 -> setMovieAdapter(it1) }
 
                         }
                     }
                     Status.ERROR -> {
                         binding.loadingView.visibility = View.GONE
+                        Toast.makeText(requireContext(),"Oops! Something went wrong!", Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> binding.loadingView.visibility = View.VISIBLE
                     Status.NONE -> {}

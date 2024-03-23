@@ -10,5 +10,13 @@
     <style name="Heading2_TextStyle" parent="TextAppearance.AppCompat">
         <item name="fontFamily">@font/inter_bold</item>
         <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="Heading1_TextStyle" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/jomhuria_regular</item>
+        <item name="android:textSize">@dimen/text_60</item>
+        <item name="android:textColor">@color/dark_green</item>
+    </style>
+
 </resources>

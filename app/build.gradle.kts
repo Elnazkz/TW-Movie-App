@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+    //
+    implementation(libs.flexbox)
     //room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
