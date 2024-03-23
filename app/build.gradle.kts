@@ -1,9 +1,9 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-kapt")
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
-    kotlin("kapt")
     id("com.google.dagger.hilt.android")
 }
 
@@ -38,22 +38,25 @@ android {
         jvmTarget = "1.8"
     }
     buildToolsVersion = "30.0.2"
+
     dataBinding {
         enable = true
     }
 }
 
 dependencies {
+    //
+    implementation(libs.flexbox)
     //room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
 
     //lifecycle
     implementation( libs.androidx.lifecycle.runtime.ktx)
     //glide
     implementation(libs.glide)
-    ksp(libs.compiler)
+    kapt(libs.compiler)
 
     //circular image view
     implementation(libs.circleimageview)
@@ -67,11 +70,11 @@ dependencies {
     implementation(libs.converter.gson)
 
     //okhttp
+    implementation("com.squareup.okhttp3:okhttp")
     implementation(libs.logging.interceptor)
-    implementation(libs.okhttp)
     //hilt
-    implementation(libs.hilt.android)
-    implementation(libs.hilt.compiler)
+    implementation( libs.hilt.android)
+    kapt( libs.hilt.compiler)
     //navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
@@ -86,4 +89,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+kapt {
+    correctErrorTypes = true
 }

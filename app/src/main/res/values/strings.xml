@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TW-Movie-App</string>
+    <string name="no_movies_fount">No Movies Found</string>
+    <string name="user_score">user score</string>
+    <string name="popular_right_now">Popular Right now</string>
+    <string name="search">Search</string>
+    <string name="animation">Animation</string>
 </resources>
