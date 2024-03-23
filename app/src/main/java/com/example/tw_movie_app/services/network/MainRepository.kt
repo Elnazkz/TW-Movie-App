@@ -19,4 +19,7 @@ class MainRepository @Inject constructor(
     suspend fun getGenres() =
         apiService.getGenres()
 
+    suspend fun doSearch(text: String) =
+        apiService.search(text)
+
 }

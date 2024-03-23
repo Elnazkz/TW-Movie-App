@@ -19,7 +19,8 @@ class MovieAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
-            setGenres(movie.genres.take(2))
+            if (movie.genres.isNotEmpty())
+                setGenres(movie.genres.take(2))
             binding.movieTitle.text = movie.originalTitle
             binding.movieReleaseDate.text = movie.releaseDate
             binding.userScore.text = movie.votePercentage.toString() + "%"
