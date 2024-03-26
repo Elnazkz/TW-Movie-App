@@ -15,4 +15,12 @@
     <string name="add_personal_rating">add personal rating</string>
     <string name="view_favs">View Favs</string>
     <string name="go_to_favourites">Go to favourites</string>
+    <string name="back">Back</string>
+    <string name="my_favourites">My Favourites</string>
+    <string name="my_rating">My Rating</string>
+    <string name="zero">0</string>
+    <string name="search_for_more">Search for More</string>
+    <string name="you_ve_rated_this_0">You\'ve rated this 0</string>
+    <string name="click_to_reset">click to reset</string>
+    <string name="no_movies_in_the_fav_list">No movies in the fav list</string>
 </resources>

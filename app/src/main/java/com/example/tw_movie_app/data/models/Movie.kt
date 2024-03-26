@@ -10,5 +10,6 @@ data class Movie(
     val overview: String,
     val releaseDate: String,
     val votePercentage: Int,
-    val favourite: Boolean = false
+    val favourite: Boolean = false,
+    val myRating: Int = 0
 )

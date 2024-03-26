@@ -9,5 +9,7 @@
     <color name="grey">#E6E6E6</color>
     <color name="text_grey">#959595</color>
     <color name="button_brown">#AB803F</color>
+    <color name="brown">#995630</color>
     <color name="button_crem">#FFF3D3</color>
+
 </resources>

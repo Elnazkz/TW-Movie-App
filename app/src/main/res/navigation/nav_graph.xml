@@ -18,6 +18,28 @@
         android:id="@+id/movieDetailsPage"
         android:name="com.example.tw_movie_app.ui.fragments.MovieDetailsPage"
         android:label="MovieDetailsPage"
-        tools:layout="@layout/fragment_movie_details"/>
+        tools:layout="@layout/fragment_movie_details">
+        <action
+            android:id="@+id/action_movieDetailsPage_to_favouritesFragment"
+            app:destination="@id/favouritesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouritesFragment"
+        android:name="com.example.tw_movie_app.ui.fragments.FavouritesFragment"
+        android:label="FavouritesFragment"
+        tools:layout="@layout/fragment_favourites">
+        <action
+            android:id="@+id/action_favouritesFragment_to_popularMovieFragment"
+            app:destination="@id/popularMovieFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/ratingBottomSheet"
+        android:name="com.example.tw_movie_app.ui.bottomsheets.RatingBottomSheet"
+        android:label="RatingBottomSheet"
+        tools:layout="@layout/bottom_sheet_rating">
+        <action
+            android:id="@+id/action_ratingBottomSheet_to_favouritesFragment"
+            app:destination="@id/favouritesFragment" />
+    </dialog>
 
 </navigation>

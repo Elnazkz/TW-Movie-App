@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mainItemLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_15">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/movie_pic"
+            android:layout_width="@dimen/dimen_120"
+            android:layout_height="@dimen/dimen_170"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media_2"
+            tools:src="@drawable/ic_launcher_background" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/fave_button"
+            android:layout_width="@dimen/dimen_52"
+            android:layout_height="@dimen/dimen_52"
+            android:background="@drawable/bg_circle_shadow"
+            android:elevation="@dimen/dimen_12"
+            android:padding="@dimen/dimen_10"
+            android:src="@drawable/favourite_button_selector"
+            app:layout_constraintBottom_toBottomOf="@id/movie_pic"
+            app:layout_constraintEnd_toEndOf="@id/movie_pic"
+            app:layout_constraintStart_toStartOf="@id/movie_pic"
+            app:layout_constraintTop_toBottomOf="@id/movie_pic" />
+
+        <TextView
+            android:id="@+id/my_rating_titile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="@string/my_rating"
+            app:layout_constraintEnd_toEndOf="@id/fave_button"
+            app:layout_constraintStart_toStartOf="@id/fave_button"
+            app:layout_constraintTop_toBottomOf="@id/fave_button" />
+
+        <TextView
+            android:id="@+id/rating_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="@string/zero"
+            app:layout_constraintEnd_toEndOf="@id/fave_button"
+            app:layout_constraintStart_toStartOf="@id/fave_button"
+            app:layout_constraintTop_toBottomOf="@id/my_rating_titile" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
