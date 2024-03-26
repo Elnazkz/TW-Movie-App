@@ -9,6 +9,15 @@
         android:id="@+id/popularMovieFragment"
         android:name="com.example.tw_movie_app.ui.fragments.PopularMovieFragment"
         android:label="PopularMovieFragment"
-        tools:layout="@layout/fragment_movies_list"/>
+        tools:layout="@layout/fragment_movies_list">
+        <action
+            android:id="@+id/action_popularMovieFragment_to_movieDetailsPage"
+            app:destination="@id/movieDetailsPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailsPage"
+        android:name="com.example.tw_movie_app.ui.fragments.MovieDetailsPage"
+        android:label="MovieDetailsPage"
+        tools:layout="@layout/fragment_movie_details"/>
 
 </navigation>

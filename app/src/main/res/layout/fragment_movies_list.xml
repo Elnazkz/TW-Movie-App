@@ -43,6 +43,7 @@
             android:text="@string/popular_right_now"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginHorizontal="@dimen/dimen_30"
+            android:textColor="@color/dark_green"
             app:layout_constraintTop_toBottomOf="@id/searchView"
             style="@style/Heading1_TextStyle"/>
 

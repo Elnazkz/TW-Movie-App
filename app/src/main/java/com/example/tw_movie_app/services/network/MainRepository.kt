@@ -22,4 +22,8 @@ class MainRepository @Inject constructor(
     suspend fun doSearch(text: String) =
         apiService.search(text)
 
+    suspend fun getMovieDetail(movieId: Int) =
+        apiService.getMovieDetails(movieId)
+
+
 }

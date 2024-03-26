@@ -11,7 +11,8 @@ import com.example.tw_movie_app.data.models.Movie
 import com.example.tw_movie_app.databinding.ItemMovieBinding
 
 class MovieAdapter(
-    private val movieList: List<Movie>
+    private val movieList: List<Movie>,
+    private val onItemClickListener: (Int) -> Unit
 ) : RecyclerView.Adapter<MovieAdapter.FavArticleViewHolder>() {
 
     inner class FavArticleViewHolder(
@@ -30,6 +31,10 @@ class MovieAdapter(
                 .load(POSTER_IMAGE_BASE_URL + movie.posterPath)
                 .error(R.drawable.placeholder)
                 .into(binding.moviePic)
+
+            binding.mainItemLayout.setOnClickListener {
+                onItemClickListener(movie.id)
+            }
         }
 
         private fun setGenres(list: List<String>) {

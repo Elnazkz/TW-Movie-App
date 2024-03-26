@@ -7,4 +7,6 @@
     <string name="search">Search</string>
     <string name="animation">Animation</string>
     <string name="cancel">cancel</string>
+    <string name="back_to_search">Back to Search</string>
+    <string name="oops_something_went_wrong">Oops! Something went wrong!</string>
 </resources>

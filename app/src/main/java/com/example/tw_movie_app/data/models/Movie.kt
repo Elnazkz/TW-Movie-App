@@ -1,6 +1,5 @@
 package com.example.tw_movie_app.data.models
 
-import com.google.gson.annotations.SerializedName
 
 data class Movie(
     val id: Int = 0,
@@ -11,4 +10,5 @@ data class Movie(
     val overview: String,
     val releaseDate: String,
     val votePercentage: Int,
+    val favourite: Boolean = false
 )
