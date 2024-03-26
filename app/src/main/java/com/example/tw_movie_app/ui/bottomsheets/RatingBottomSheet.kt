@@ -13,6 +13,7 @@ import com.example.tw_movie_app.R
 import com.example.tw_movie_app.baseconf.BACK_DROP_BASE_URL
 import com.example.tw_movie_app.baseconf.POSTER_IMAGE_BASE_URL
 import com.example.tw_movie_app.databinding.BottomSheetRatingBinding
+import com.example.tw_movie_app.ui.activities.MainActivity
 import com.example.tw_movie_app.ui.fragments.MOVIE_BACKDROP_BUNDLE_KEY
 import com.example.tw_movie_app.ui.fragments.MOVIE_POSTER_BUNDLE_KEY
 import com.example.tw_movie_app.ui.fragments.MOVIE_TITLE_BUNDLE_KEY
@@ -27,6 +28,7 @@ class RatingBottomSheet : BottomSheetDialogFragment() {
     var title = ""
     var poster = ""
     var backDrop = ""
+    var onFavButtonClickListener: () -> Unit = {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +38,18 @@ class RatingBottomSheet : BottomSheetDialogFragment() {
             backDrop = getString(MOVIE_BACKDROP_BUNDLE_KEY, "")
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = BottomSheetRatingBinding.inflate(inflater,container, false)
-        with(binding) {
-            setToolbar()
-            setMoviePic(poster)
+        binding = BottomSheetRatingBinding.inflate(inflater, container, false)
+        setToolbar()
+        setMoviePic(poster)
+        binding.viewFavs.setOnClickListener {
+            dismiss()
+            onFavButtonClickListener()
         }
         return binding.root
 

@@ -17,6 +17,7 @@ import com.example.tw_movie_app.baseconf.POSTER_IMAGE_BASE_URL
 import com.example.tw_movie_app.data.models.Movie
 import com.example.tw_movie_app.databinding.FragmentMovieDetailsBinding
 import com.example.tw_movie_app.services.network.Status
+import com.example.tw_movie_app.ui.activities.MainActivity
 import com.example.tw_movie_app.ui.bottomsheets.RatingBottomSheet
 import com.example.tw_movie_app.utils.dpToPx
 import com.example.tw_movie_app.view_models.MovieDetailsViewModel
@@ -46,6 +47,12 @@ class MovieDetailsPage :
 
     override fun setupViews() {
         binding.loadingView.visibility = View.VISIBLE
+        binding.viewFavs.setOnClickListener {
+            (requireActivity() as MainActivity).navigate(
+                R.id.action_movieDetailsPage_to_favouritesFragment,
+                null
+            )
+        }
 
         setToolbar()
         lifecycleScope.launch {
@@ -69,6 +76,12 @@ class MovieDetailsPage :
                             )
                             val bottomSheetFragment = RatingBottomSheet()
                             bottomSheetFragment.arguments = bundle
+                            bottomSheetFragment.onFavButtonClickListener = {
+                                (requireActivity() as MainActivity).navigate(
+                                    R.id.action_movieDetailsPage_to_favouritesFragment,
+                                    null
+                                )
+                            }
                             bottomSheetFragment.show(parentFragmentManager, "custom_bottom_sheet")
                         }
                     }
