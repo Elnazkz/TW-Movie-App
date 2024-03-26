@@ -7,6 +7,14 @@
         <item name="cornerSizeTopRight">@dimen/dimen_14</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.App.Card.Media_2" parent="">
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">@dimen/dimen_30</item>
+    </style>
+
+
     <style name="Heading2_TextStyle" parent="TextAppearance.AppCompat">
         <item name="fontFamily">@font/inter_bold</item>
         <item name="android:textSize">@dimen/text_16</item>

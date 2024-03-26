@@ -13,6 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.example.tw_movie_app.R
+import com.example.tw_movie_app.databinding.CustomBackButtonBinding
+import com.example.tw_movie_app.databinding.CustomDoubleButtonBinding
 
 class CustomBackButton(
     context: Context,
@@ -22,7 +24,7 @@ class CustomBackButton(
     attrs
 ) {
 
-    private lateinit var view: View
+    private lateinit var binding: CustomBackButtonBinding
     private lateinit var icon: AppCompatImageView
     private lateinit var title: AppCompatTextView
 
@@ -31,12 +33,9 @@ class CustomBackButton(
     }
 
     private fun initView() {
-        view = View.inflate(context, R.layout.custom_back_button, this)
+        binding = CustomBackButtonBinding.inflate(LayoutInflater.from(context), this, true)
         val customAttributesStyle =
             context.obtainStyledAttributes(attrs, R.styleable.CustomBackButton, 0, 0)
-
-        icon = view.findViewById(R.id.button_icon)
-        title = view.findViewById(R.id.button_title)
 
         try {
             val buttonTitleText = customAttributesStyle.getString(R.styleable.CustomBackButton_buttonText)
@@ -60,22 +59,22 @@ class CustomBackButton(
 
     private fun setTitle(name: String?) {
         if (name != null)
-            title.text = name
+            binding.buttonTitle.text = name
     }
 
     private fun setIconColor(colorRes: Int?) {
         if (colorRes != null)
-            icon.setColorFilter(colorRes)
+            binding.buttonIcon.setColorFilter(colorRes)
     }
 
 
     private fun setTitleColor(colorRes: Int?) {
         if (colorRes != null)
-            title.setTextColor(colorRes)
+            binding.buttonTitle.setTextColor(colorRes)
     }
 
     fun setClickListener(action: () -> Unit) {
-        view.rootView.setOnClickListener {
+        binding.root.setOnClickListener {
             action()
         }
     }

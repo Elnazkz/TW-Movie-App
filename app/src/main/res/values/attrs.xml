@@ -5,4 +5,13 @@
         <attr name="buttonIconTint" format="color"/>
         <attr name="textColor" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name="CustomDoubleButton">
+        <attr name="topButtonText" format="string"/>
+        <attr name="bottomButtonText" format="string"/>
+        <attr name="topButtonTextColor" format="color"/>
+        <attr name="bottomButtonTextColor" format="color"/>
+        <attr name="topButtonBackground" format="reference"/>
+        <attr name="bottomButtonBackground" format="reference"/>
+    </declare-styleable>
 </resources>

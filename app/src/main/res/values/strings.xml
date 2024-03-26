@@ -9,4 +9,9 @@
     <string name="cancel">cancel</string>
     <string name="back_to_search">Back to Search</string>
     <string name="oops_something_went_wrong">Oops! Something went wrong!</string>
+    <string name="vote_percentage_placeholder">%s %%</string>
+    <string name="overview">Overview</string>
+    <string name="rate_it_myself">Rate it myself  ></string>
+    <string name="add_personal_rating">add personal rating</string>
+    <string name="view_favs">View Favs</string>
 </resources>

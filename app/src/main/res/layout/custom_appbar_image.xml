@@ -10,7 +10,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/toolbar_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_300dp"
+            android:layout_height="@dimen/dimen_300"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/placeholder"
             android:scaleType="centerCrop" />
@@ -31,13 +31,14 @@
             android:id="@+id/toolbar_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="@string/popular_right_now"
+            tools:text="@string/oops_something_went_wrong"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginHorizontal="@dimen/dimen_25"
             app:layout_constraintTop_toBottomOf="@id/back_button"
             app:layout_constraintEnd_toEndOf="parent"
+            android:maxLines="2"
+            android:ellipsize="end"
             style="@style/Heading1_TextStyle"
-            android:textSize="@dimen/text_80"
             android:textColor="@color/white"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

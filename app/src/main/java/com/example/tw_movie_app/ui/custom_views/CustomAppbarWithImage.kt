@@ -43,7 +43,7 @@ class CustomAppbarWithImage @JvmOverloads constructor(
     }
 
     fun setBackButtonClickListener(action: () -> Unit) {
-        binding.backButton.setClickListener {
+        binding.backButton.setOnClickListener {
             action()
         }
     }

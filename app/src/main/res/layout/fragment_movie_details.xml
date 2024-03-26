@@ -1,41 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/mainScrollView"
+        android:fillViewport="true"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.tw_movie_app.ui.custom_views.CustomAppbarWithImage
-            app:layout_constraintTop_toTopOf="parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/toolbar"
-            />
+            android:layout_height="match_parent">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_gravity="center_horizontal"
-            android:scaleType="centerCrop"
-            android:id="@+id/movie_pic"
-            app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="@dimen/dimen_15"
-            android:layout_width="@dimen/dimen_100"
-            android:layout_height="@dimen/dimen_150"
-            android:layout_alignParentTop="true"
-            tools:src="@drawable/ic_launcher_background"/>
+            <com.example.tw_movie_app.ui.custom_views.CustomAppbarWithImage
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ProgressBar
-            android:id="@+id/loading_view"
-            android:visibility="gone"
-            android:layout_width="@dimen/dimen_50"
-            android:layout_height="@dimen/dimen_50"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/fave_button"
+                android:layout_width="@dimen/dimen_52"
+                android:layout_height="@dimen/dimen_52"
+                android:layout_margin="@dimen/dimen_5"
+                android:background="@drawable/bg_circle"
+                android:padding="@dimen/dimen_10"
+                android:src="@drawable/favourite_button_selector"
+                app:layout_constraintBottom_toTopOf="@id/movie_pic"
+                app:layout_constraintStart_toEndOf="@id/movie_pic"
+                app:layout_constraintTop_toTopOf="@id/movie_pic" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:layout_width="@dimen/dimen_130"
+                android:layout_height="@dimen/dimen_180"
+                android:background="@drawable/bg_top_right_round_white"
+                app:layout_constraintBottom_toBottomOf="@id/movie_pic"
+                app:layout_constraintEnd_toEndOf="@id/movie_pic"
+                app:layout_constraintStart_toStartOf="@id/movie_pic"
+                app:layout_constraintTop_toTopOf="@id/movie_pic" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/movie_pic"
+                android:layout_width="@dimen/dimen_120"
+                android:layout_height="@dimen/dimen_170"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/dimen_25"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@id/toolbar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:shapeAppearance="?attr/shapeAppearanceMediumComponent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media_2"
+                tools:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/movie_title"
+                style="@style/Heading2_TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_20"
+                android:ellipsize="end"
+                android:maxWidth="@dimen/dimen_200"
+                android:maxLines="1"
+                app:layout_constraintStart_toEndOf="@id/movie_pic"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                tools:text="Five Nights" />
+
+            <TextView
+                android:id="@+id/movie_release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:textColor="@color/text_grey"
+                app:layout_constraintStart_toEndOf="@id/movie_pic"
+                app:layout_constraintTop_toBottomOf="@id/movie_title"
+                tools:text="2023" />
+
+            <TextView
+                android:id="@+id/user_score"
+                style="@style/Heading2_TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10"
+                app:layout_constraintStart_toEndOf="@id/movie_pic"
+                app:layout_constraintTop_toBottomOf="@id/movie_release_date"
+                tools:text="70%" />
+
+            <TextView
+                android:id="@+id/user_score_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_10"
+                android:text="@string/user_score"
+                android:textSize="@dimen/text_12"
+                app:layout_constraintBottom_toBottomOf="@id/user_score"
+                app:layout_constraintStart_toEndOf="@id/user_score"
+                app:layout_constraintTop_toTopOf="@id/user_score" />
+
+            <com.example.tw_movie_app.ui.custom_views.CustomProgressLine
+                android:layout_width="wrap_content"
+                android:id="@+id/progress_horizontal"
+                app:layout_constraintTop_toBottomOf="@id/user_score"
+                app:layout_constraintStart_toStartOf="@id/user_score"
+                android:layout_height="wrap_content"/>
+
+            <com.example.tw_movie_app.ui.custom_views.CustomDoubleButton
+                android:id="@+id/rate_button"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/dimen_30"
+                android:layout_marginStart="@dimen/dimen_25"
+                app:topButtonText="@string/rate_it_myself"
+                app:bottomButtonText="@string/add_personal_rating"
+                app:topButtonTextColor="@color/white"
+                app:bottomButtonTextColor="@color/button_brown"
+                app:topButtonBackground="@drawable/bg_top_round_brown"
+                app:bottomButtonBackground="@drawable/bg_bottom_round_black"
+                app:layout_constraintTop_toBottomOf="@id/movie_pic"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/view_favs"
+                android:layout_width="@dimen/dimen_160"
+                android:layout_height="@dimen/dimen_60"
+                android:text="@string/view_favs"
+                android:textColor="@color/button_brown"
+                android:textAllCaps="false"
+                app:layout_constraintTop_toTopOf="@id/rate_button"
+                app:layout_constraintBottom_toBottomOf="@id/rate_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/bg_round_creme"
+                android:layout_marginEnd="@dimen/dimen_25"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/overviewTitle"
+                style="@style/Heading2_TextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_25"
+                app:layout_constraintTop_toBottomOf="@id/rate_button"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/dimen_25"
+                android:layout_marginTop="@dimen/dimen_40"
+                android:text="@string/overview"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/overview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen_25"
+                app:layout_constraintTop_toBottomOf="@id/overviewTitle"
+                android:layout_marginTop="@dimen/dimen_20"
+                tools:text=""/>
+
+            <ProgressBar
+                android:id="@+id/loading_view"
+                android:layout_width="@dimen/dimen_50"
+                android:layout_height="@dimen/dimen_50"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>

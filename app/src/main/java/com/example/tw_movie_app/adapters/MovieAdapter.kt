@@ -22,19 +22,22 @@ class MovieAdapter(
         fun bind(movie: Movie) {
             if (movie.genres.isNotEmpty())
                 setGenres(movie.genres.take(2))
-            binding.movieTitle.text = movie.originalTitle
-            binding.movieReleaseDate.text = movie.releaseDate
-            binding.userScore.text = movie.votePercentage.toString() + "%"
+            with(binding) {
+                movieTitle.text = movie.originalTitle
+                movieReleaseDate.text = movie.releaseDate
+                userScore.text = root.context.getString(R.string.vote_percentage_placeholder, movie.votePercentage.toString())
 
-            Glide
-                .with(binding.root)
-                .load(POSTER_IMAGE_BASE_URL + movie.posterPath)
-                .error(R.drawable.placeholder)
-                .into(binding.moviePic)
+                Glide
+                    .with(root)
+                    .load(POSTER_IMAGE_BASE_URL + movie.posterPath)
+                    .error(R.drawable.placeholder)
+                    .into(moviePic)
 
-            binding.mainItemLayout.setOnClickListener {
-                onItemClickListener(movie.id)
+                mainItemLayout.setOnClickListener {
+                    onItemClickListener(movie.id)
+                }
             }
+
         }
 
         private fun setGenres(list: List<String>) {
