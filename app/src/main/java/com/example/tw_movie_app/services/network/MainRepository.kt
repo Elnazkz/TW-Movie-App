@@ -1,11 +1,16 @@
 package com.example.tw_movie_app.services.network
 
 
+import com.example.tw_movie_app.data.models.Movie
+import com.example.tw_movie_app.services.room.AppDataBase
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
 class MainRepository @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val db: AppDataBase
+
 ) {
 //    companion object{
 //        const val BASIC_AUTH =
@@ -25,5 +30,15 @@ class MainRepository @Inject constructor(
     suspend fun getMovieDetail(movieId: Int) =
         apiService.getMovieDetails(movieId)
 
+    suspend fun addMovieToFaveDB(movie: Movie): Long =
+        db.movieDao.insert(movie)
 
+    suspend fun getMovieByID(id: Int) =
+        db.movieDao.getMovieById(id)
+
+    fun getAllMoviesFromFavs() =
+        db.movieDao.getAllMoviesFlow()
+
+    suspend fun deleteMovieFromDB(movie: Movie) =
+        db.movieDao.delete(movie)
 }
