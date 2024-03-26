@@ -1,5 +1,6 @@
 package com.example.tw_movie_app.data.responses
 
+import com.example.tw_movie_app.data.models.Genre
 import com.google.gson.annotations.SerializedName
 
 data class MovieResponse(
@@ -18,4 +19,5 @@ data class MovieResponse(
     val releaseDate: String?,
     @SerializedName("vote_average")
     val voteAverage: Double?,
+    val genres: List<Genre>?
 )

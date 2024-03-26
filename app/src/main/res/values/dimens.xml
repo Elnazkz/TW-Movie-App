@@ -71,7 +71,11 @@
     <dimen name="text_22">22sp</dimen>
     <dimen name="text_24">24sp</dimen>
     <dimen name="text_26">26sp</dimen>
+    <dimen name="text_28">28sp</dimen>
+    <dimen name="text_30">30sp</dimen>
     <dimen name="text_60">60sp</dimen>
+    <dimen name="text_80">80sp</dimen>
+    <dimen name="text_90">90sp</dimen>
 
     <dimen name="text_small">12sp</dimen>
     <dimen name="text_medium">14sp</dimen>
@@ -80,5 +84,6 @@
     <dimen name="dimen_56">56dp</dimen>
     <dimen name="dimen_110">110dp</dimen>
     <dimen name="dimen_152">152dp</dimen>
+    <dimen name="dimen_300dp">300dp</dimen>
 
 </resources>

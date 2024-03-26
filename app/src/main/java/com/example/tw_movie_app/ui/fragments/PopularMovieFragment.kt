@@ -4,21 +4,22 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.tw_movie_app.R
 import com.example.tw_movie_app.adapters.MovieAdapter
 import com.example.tw_movie_app.appbase.BaseFragment
 import com.example.tw_movie_app.data.models.Movie
-import com.example.tw_movie_app.data.responses.MovieResponse
 import com.example.tw_movie_app.databinding.FragmentMoviesListBinding
 import com.example.tw_movie_app.services.network.Status
+import com.example.tw_movie_app.ui.activities.MainActivity
 import com.example.tw_movie_app.view_models.PopularMovieViewModel
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+const val MOVIE_ID_BUNDLE_KEY = "movie_id"
 @AndroidEntryPoint
 class PopularMovieFragment : BaseFragment<FragmentMoviesListBinding>(R.layout.fragment_movies_list) {
 
@@ -29,6 +30,8 @@ class PopularMovieFragment : BaseFragment<FragmentMoviesListBinding>(R.layout.fr
         popularMovieViewModel.getMovies()
     }
     override fun setupViews() {
+        binding.loadingView.visibility = View.VISIBLE
+
         observe()
         setSearch()
         setSearchClearButton()
@@ -37,33 +40,38 @@ class PopularMovieFragment : BaseFragment<FragmentMoviesListBinding>(R.layout.fr
     private fun observe() {
         lifecycleScope.launch {
             popularMovieViewModel.getMovies.collectLatest {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        binding.loadingView.visibility = View.GONE
+                if (it.isEmpty()) {
+                    binding.loadingView.visibility = View.GONE
 
-                        if (it.data?.isEmpty() == true) {
-                            binding.noDataFound.visibility = View.VISIBLE
-                            setMovieAdapter(listOf())
-                        } else {
-                            binding.noDataFound.visibility = View.GONE
-                            it.data?.let { it1 -> setMovieAdapter(it1) }
+                    binding.noDataFound.visibility = View.VISIBLE
+                } else {
+                    binding.loadingView.visibility = View.GONE
 
-                        }
-                    }
-                    Status.ERROR -> {
-                        binding.loadingView.visibility = View.GONE
-                        Toast.makeText(requireContext(),"Oops! Something went wrong!", Toast.LENGTH_SHORT).show()
-                    }
-                    Status.LOADING -> binding.loadingView.visibility = View.VISIBLE
-                    Status.NONE -> {}
+                    binding.noDataFound.visibility = View.GONE
+                    setMovieAdapter(it)
                 }
+
+            }
+        }
+
+        lifecycleScope.launch {
+            popularMovieViewModel.error.collectLatest {
+                binding.loadingView.visibility = View.GONE
+                Toast.makeText(requireContext(),it, Toast.LENGTH_SHORT).show()
 
             }
         }
     }
 
     private fun setMovieAdapter(list: List<Movie>) {
-        movieAdapter = MovieAdapter(list)
+        movieAdapter = MovieAdapter(list) {
+            val bundle = bundleOf(MOVIE_ID_BUNDLE_KEY to it)
+            (requireActivity() as MainActivity).navigate(
+                R.id.action_popularMovieFragment_to_movieDetailsPage,
+                bundle
+            )
+
+        }
         binding.moviesRv.adapter = movieAdapter
 
     }

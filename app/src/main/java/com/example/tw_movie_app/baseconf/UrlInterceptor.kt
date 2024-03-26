@@ -11,7 +11,7 @@ class UrlInterceptor @Inject constructor() : Interceptor {
         val url = request.url
 
         val newUrlBuilder = url.newBuilder()
-            .addQueryParameter("api_key","7cb1414ebefa131e45f45ddc5af99110")
+            .addQueryParameter(API_KEY, API_KEY_VALUE)
 
         val newRequestBuilder = request.newBuilder()
             .url(newUrlBuilder.build())

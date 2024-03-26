@@ -15,11 +15,11 @@ import com.example.tw_movie_app.services.network.Status
 import com.example.tw_movie_app.services.network.getData
 import com.example.tw_movie_app.services.network.getDataFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import java.util.ArrayList
 import javax.inject.Inject
 import kotlin.math.ceil
 
@@ -32,21 +32,30 @@ class PopularMovieViewModel @Inject constructor(
     private var genres = listOf<Genre>()
     private var originalMovies = listOf<Movie>()
 
-    private val _getMovies = MutableStateFlow<Resource<List<Movie>>>(Resource.initialize())
-    val getMovies: StateFlow<Resource<List<Movie>>> = _getMovies
+    private val _getMovies = MutableStateFlow<List<Movie>>(listOf())
+    val getMovies: StateFlow<List<Movie>> = _getMovies
 
     private val _getGenres = MutableStateFlow<Resource<GenresResponse>>(Resource.initialize())
     val getGenres: StateFlow<Resource<GenresResponse>> = _getGenres
 
+    private val _error = Channel<String>()
+    val error = _error.receiveAsFlow()
+
     init {
         viewModelScope.launch {
             _getGenres.collect {
-                if (it.status == Status.SUCCESS && it.data != null) {
+                if (it.status == Status.SUCCESS && it.data != null && it.data.genres != null) {
                     genres = it.data.genres
                 }
             }
         }
         getGenres()
+    }
+
+    private fun sendError(error: String) {
+        _error.trySend(
+            error
+        )
     }
 
     private fun getGenres() {
@@ -71,19 +80,18 @@ class PopularMovieViewModel @Inject constructor(
 //               flowData = _getMovies
 //           )
 
-
             val response = getData<Any?, MoviesResponse>(
                 serviceType = ServiceType.GET_POPULAR_MOVIES,
                 mainRepository = mainRepository,
                 input = null
             )
 
-            if (response.status == Status.SUCCESS && response.data != null) {
+            if (response.status == Status.SUCCESS && response.data != null && response.data.results != null) {
                 originalMovies = setMovieList(response.data.results)
-                _getMovies.value = Resource(status = Status.SUCCESS, data = originalMovies)
+                _getMovies.value = originalMovies
 
             } else {
-                _getMovies.value = Resource(status = Status.ERROR , message = "Error")
+                response.message?.let { sendError(it) }
             }
         }
     }
@@ -96,11 +104,11 @@ class PopularMovieViewModel @Inject constructor(
                 input = input
             )
 
-            if (response.status == Status.SUCCESS && response.data != null) {
-                _getMovies.value = Resource(status = Status.SUCCESS, data = setMovieList(response.data.results))
+            if (response.status == Status.SUCCESS && response.data != null && response.data.results != null) {
+                _getMovies.value = setMovieList(response.data.results)
 
             }else {
-                _getMovies.value = Resource(status = Status.ERROR , message = "Error")
+                response.message?.let { sendError(it) }
             }
         }
     }
@@ -126,7 +134,7 @@ class PopularMovieViewModel @Inject constructor(
     }
 
     fun resetToOriginalList() {
-        _getMovies.value = Resource(status = Status.SUCCESS, data = originalMovies)
+        _getMovies.value = originalMovies
     }
 
 }

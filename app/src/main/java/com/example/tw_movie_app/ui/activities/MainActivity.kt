@@ -3,6 +3,7 @@ import androidx.navigation.findNavController
 
 import android.os.Bundle
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import com.example.tw_movie_app.R
 import com.example.tw_movie_app.appbase.BaseActivity
 import com.example.tw_movie_app.databinding.ActivityMainBinding
@@ -23,4 +24,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     override fun subscribe() {
     }
+
+    fun navigate(resId: Int, bundle: Bundle?) {
+        val navOptions = NavOptions.Builder()
+            .setEnterAnim(R.anim.enter_from_right)
+            .setExitAnim(R.anim.exit_to_left)
+            .setPopEnterAnim(R.anim.enter_from_left)
+            .setPopExitAnim(R.anim.exit_to_right)
+            .build()
+        navController.navigate(resId, bundle, navOptions)
+    }
+
 }

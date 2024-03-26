@@ -32,13 +32,20 @@ suspend fun <T, G> getDataFlow(
             response = when(service) {
                 ServiceType.GET_POPULAR_MOVIES -> mainRepository.getPopularMovies()
                 ServiceType.GET_GENRES -> mainRepository.getGenres()
-                ServiceType.SEARCH_MOVIE -> TODO()
+                ServiceType.SEARCH_MOVIE -> mainRepository.doSearch(input as String)
+                ServiceType.MOVIE_DETAILS -> mainRepository.getMovieDetail(input as Int)
             }
 
             flowData.value = Resource.success( data = response as G)
 
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (exception: Exception) {
+            //TODO check for apis error format
+            exception.printStackTrace()
+
+            flowData.value = Resource.error(
+                message = "Fetch data error, please try again later!"
+            )
+
         }
     }
 }
@@ -46,7 +53,7 @@ suspend fun <T, G> getDataFlow(
 suspend fun <T,G> getData(
     serviceType: ServiceType,
     mainRepository: MainRepository,
-    input: T,
+    input: T?,
 ): Resource<G> {
 
     try {
@@ -56,16 +63,17 @@ suspend fun <T,G> getData(
                 //other services will be added below
                 ServiceType.GET_GENRES -> mainRepository.getGenres()
                 ServiceType.SEARCH_MOVIE -> mainRepository.doSearch(input as String)
+                ServiceType.MOVIE_DETAILS -> mainRepository.getMovieDetail(input as Int)
             }
 
             Resource.success( data = response as G)
         }
 
     } catch (exception: Exception) {
-
+        exception.printStackTrace()
         //TODO check for apis error format
         return Resource.error(
-            message = exception.message ?: "Fetch data error, please try again later"
+            message = "Fetch data error, please try again later!"
         )
 
     }
