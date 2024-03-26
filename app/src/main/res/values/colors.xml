@@ -4,6 +4,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_green">#8EEAA2</color>
     <color name="dark_green">#347868</color>
+    <color name="progress_green">#4CAB4A</color>
+    <color name="progress_grey">#D2D2D2</color>
     <color name="grey">#E6E6E6</color>
     <color name="text_grey">#959595</color>
+    <color name="button_brown">#AB803F</color>
+    <color name="button_crem">#FFF3D3</color>
 </resources>

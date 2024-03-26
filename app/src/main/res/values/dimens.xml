@@ -57,6 +57,10 @@
     <dimen name="dimen_210">210dp</dimen>
     <dimen name="dimen_180">180dp</dimen>
     <dimen name="dimen_140">140dp</dimen>
+    <dimen name="dimen_56">56dp</dimen>
+    <dimen name="dimen_110">110dp</dimen>
+    <dimen name="dimen_152">152dp</dimen>
+    <dimen name="dimen_300">300dp</dimen>
 
     <dimen name="button_height">50dp</dimen>
 
@@ -74,16 +78,11 @@
     <dimen name="text_28">28sp</dimen>
     <dimen name="text_30">30sp</dimen>
     <dimen name="text_60">60sp</dimen>
+    <dimen name="text_75">75sp</dimen>
     <dimen name="text_80">80sp</dimen>
     <dimen name="text_90">90sp</dimen>
+    <dimen name="dimen_170">170dp</dimen>
 
-    <dimen name="text_small">12sp</dimen>
-    <dimen name="text_medium">14sp</dimen>
-    <dimen name="text_large">16sp</dimen>
-    <dimen name="text_x_large">18sp</dimen>
-    <dimen name="dimen_56">56dp</dimen>
-    <dimen name="dimen_110">110dp</dimen>
-    <dimen name="dimen_152">152dp</dimen>
-    <dimen name="dimen_300dp">300dp</dimen>
+    <dimen name="line_max_width">130dp</dimen>
 
 </resources>
