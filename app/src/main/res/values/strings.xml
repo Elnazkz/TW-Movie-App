@@ -14,4 +14,5 @@
     <string name="rate_it_myself">Rate it myself  ></string>
     <string name="add_personal_rating">add personal rating</string>
     <string name="view_favs">View Favs</string>
+    <string name="go_to_favourites">Go to favourites</string>
 </resources>
