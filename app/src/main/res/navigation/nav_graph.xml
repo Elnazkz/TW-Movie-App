@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_favouritesFragment_to_popularMovieFragment"
             app:destination="@id/popularMovieFragment" />
+        <action
+            android:id="@+id/action_favouritesFragment_to_movieDetailsPage"
+            app:destination="@id/movieDetailsPage" />
     </fragment>
     <dialog
         android:id="@+id/ratingBottomSheet"

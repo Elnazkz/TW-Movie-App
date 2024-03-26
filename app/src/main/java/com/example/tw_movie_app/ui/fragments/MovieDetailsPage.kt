@@ -16,7 +16,6 @@ import com.example.tw_movie_app.baseconf.BACK_DROP_BASE_URL
 import com.example.tw_movie_app.baseconf.POSTER_IMAGE_BASE_URL
 import com.example.tw_movie_app.data.models.Movie
 import com.example.tw_movie_app.databinding.FragmentMovieDetailsBinding
-import com.example.tw_movie_app.services.network.Status
 import com.example.tw_movie_app.ui.activities.MainActivity
 import com.example.tw_movie_app.ui.bottomsheets.RatingBottomSheet
 import com.example.tw_movie_app.utils.dpToPx
@@ -25,15 +24,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-const val MOVIE_TITLE_BUNDLE_KEY = "movide_title"
-const val MOVIE_POSTER_BUNDLE_KEY = "movide_poster"
-const val MOVIE_BACKDROP_BUNDLE_KEY = "movide_backdrop"
+const val MOVIE_OBJ = "movie_data"
 
 @AndroidEntryPoint
 class MovieDetailsPage :
     BaseFragment<FragmentMovieDetailsBinding>(R.layout.fragment_movie_details) {
 
     private val movieDetailsViewModel: MovieDetailsViewModel by viewModels()
+    private lateinit var movieData: Movie
     override fun subscribe() {
         val movieId = arguments?.getInt(MOVIE_ID_BUNDLE_KEY)
         if (movieId != null)
@@ -47,20 +45,22 @@ class MovieDetailsPage :
 
     override fun setupViews() {
         binding.loadingView.visibility = View.VISIBLE
-        binding.viewFavs.setOnClickListener {
-            (requireActivity() as MainActivity).navigate(
-                R.id.action_movieDetailsPage_to_favouritesFragment,
-                null
-            )
-        }
-
         setToolbar()
+        setObservers()
+    }
+
+    private fun setObservers() {
         lifecycleScope.launch {
             movieDetailsViewModel.getMovieDetails.collectLatest {
+                setClickListeners()
+
                 it?.let { movie ->
+                    movieData = movie
                     with(binding) {
                         loadingView.visibility = View.GONE
+
                         toolbar.setTitleText(movie.originalTitle)
+                        setStarIcon(movie.favourite)
                         movieTitle.text = movie.originalTitle
                         movieReleaseDate.text = movie.releaseDate
                         setPercentage(movie.votePercentage)
@@ -70,9 +70,7 @@ class MovieDetailsPage :
                         overview.text = movie.overview
                         rateButton.setOnClickListener {
                             val bundle = bundleOf(
-                                MOVIE_TITLE_BUNDLE_KEY to movie.originalTitle,
-                                MOVIE_POSTER_BUNDLE_KEY to movie.posterPath,
-                                MOVIE_BACKDROP_BUNDLE_KEY to movie.backdropPath
+                                MOVIE_OBJ to movie
                             )
                             val bottomSheetFragment = RatingBottomSheet()
                             bottomSheetFragment.arguments = bundle
@@ -90,10 +88,53 @@ class MovieDetailsPage :
         }
 
         lifecycleScope.launch {
+            movieDetailsViewModel.insertionResult.collectLatest {
+                if (it > 0)
+                    binding.faveButton.setImageResource(R.drawable.ic_favourite_filled)
+                else {
+                    binding.faveButton.setImageResource(R.drawable.ic_favourite_outline)
+                }
+
+            }
+        }
+
+        lifecycleScope.launch {
+            movieDetailsViewModel.deleteResult.collectLatest {
+                if (it == 0)
+                    binding.faveButton.setImageResource(R.drawable.ic_favourite_filled)
+                else {
+                    binding.faveButton.setImageResource(R.drawable.ic_favourite_outline)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             movieDetailsViewModel.error.collectLatest {
                 binding.loadingView.visibility = View.GONE
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
 
+            }
+        }
+    }
+
+    private fun setStarIcon(isFav: Boolean) {
+        if (isFav)
+            binding.faveButton.setImageResource(R.drawable.ic_favourite_filled)
+        else
+            binding.faveButton.setImageResource(R.drawable.ic_favourite_outline)
+    }
+
+    private fun setClickListeners() {
+        with(binding){
+            viewFavs.setOnClickListener {
+                (requireActivity() as MainActivity).navigate(
+                    R.id.action_movieDetailsPage_to_favouritesFragment,
+                    null
+                )
+            }
+
+            faveButton.setOnClickListener {
+                movieDetailsViewModel.updateMovieFaveDB(movieData)
             }
         }
     }

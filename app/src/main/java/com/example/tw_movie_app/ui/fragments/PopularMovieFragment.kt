@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -20,15 +21,25 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 const val MOVIE_ID_BUNDLE_KEY = "movie_id"
+
 @AndroidEntryPoint
-class PopularMovieFragment : BaseFragment<FragmentMoviesListBinding>(R.layout.fragment_movies_list) {
+class PopularMovieFragment :
+    BaseFragment<FragmentMoviesListBinding>(R.layout.fragment_movies_list) {
 
     private val popularMovieViewModel: PopularMovieViewModel by viewModels()
     private lateinit var movieAdapter: MovieAdapter
 
     override fun subscribe() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            })
         popularMovieViewModel.getMovies()
     }
+
     override fun setupViews() {
         binding.loadingView.visibility = View.VISIBLE
 
@@ -57,7 +68,7 @@ class PopularMovieFragment : BaseFragment<FragmentMoviesListBinding>(R.layout.fr
         lifecycleScope.launch {
             popularMovieViewModel.error.collectLatest {
                 binding.loadingView.visibility = View.GONE
-                Toast.makeText(requireContext(),it, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
 
             }
         }
@@ -77,7 +88,7 @@ class PopularMovieFragment : BaseFragment<FragmentMoviesListBinding>(R.layout.fr
     }
 
     private fun setSearch() {
-        binding.searchView.addTextChangedListener(object : TextWatcher{
+        binding.searchView.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 

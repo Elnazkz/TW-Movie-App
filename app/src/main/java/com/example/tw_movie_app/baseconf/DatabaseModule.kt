@@ -10,13 +10,14 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+const val DB_NAME = "fav_movies_db"
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
     @Singleton
     @Provides
     fun provideDB(@ApplicationContext ctx: Context): AppDataBase {
-        val builder = Room.databaseBuilder(ctx, AppDataBase::class.java, "fav_movies_db")
+        val builder = Room.databaseBuilder(ctx, AppDataBase::class.java, DB_NAME )
             .allowMainThreadQueries()
         return builder.build()
     }

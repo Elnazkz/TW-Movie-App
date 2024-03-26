@@ -6,7 +6,7 @@ import androidx.room.*
 abstract class BaseDao<T> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract suspend fun insert(data: T)
+    abstract suspend fun insert(data: T): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insert(data: List<T>)
@@ -15,5 +15,5 @@ abstract class BaseDao<T> {
     abstract suspend fun update(data: T)
 
     @Delete
-    abstract suspend fun delete(data: T)
+    abstract suspend fun delete(data: T): Int
 }
